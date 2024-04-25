@@ -94,6 +94,7 @@ const App = () => {
   const clearCart = () => {
     setCart([]);
   };
+  const totalItemsInCart = cart.reduce((total, item) => total + item.incart, 0);
 
   return (
     <CartContext.Provider value={{ cart,updateCartItem ,getById, addToCart, emptyCart, removeFromCart, removeOneFromCart, getCartTotal, clearCart }}>
@@ -105,7 +106,12 @@ const App = () => {
             options={({ navigation }) => ({
               title: 'Accueil',
               headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('Cart')}>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={{flexDirection:'row',alignItems:"center"}}>
+                  {totalItemsInCart ? (
+                  <Text style={{position:"absolute",top:-5,left:15, paddingLeft:3.5,zIndex:99,paddingRight:2.5,backgroundColor:"#00a2ff",borderRadius:15, color:"white", opacity:1}}>{totalItemsInCart}</Text>
+                  ):(
+                    <Text></Text>
+                  )}
                   <View style={{ marginRight: 20 }}>
                     <Ionicons name="cart-outline" size={24} color="black" />
                   </View>
